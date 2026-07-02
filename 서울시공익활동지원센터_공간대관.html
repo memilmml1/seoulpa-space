@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울시공익활동지원센터 · 공간대관</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --ink:#191F28;
+  --gray:#4E5968;
+  --gray-light:#8B95A1;
+  --line:#F2F4F6;
+  --red:#FF4B4B;
+  --red-tint:#FFF2F2;
+  --surface:#F9FAFB;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Pretendard', -apple-system, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block; max-width:100%;}
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; border:none; background:none; cursor:pointer;}
+
+/* ===== nav ===== */
+.nav{
+  position:sticky; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 40px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(12px);
+}
+.nav-logo{font-weight:700; font-size:13.5px; letter-spacing:-0.01em; color:var(--gray);}
+.nav-logo b{color:var(--red); font-weight:700;}
+.nav-cta{
+  font-size:14px; font-weight:700; padding:11px 22px; border-radius:100px;
+  background:var(--ink); color:#fff; transition:background .15s ease;
+}
+.nav-cta:hover{background:var(--red);}
+
+/* ===== 1. hero ===== */
+.hero{
+  min-height:82vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:60px 24px; text-align:center;
+}
+.hero h1{
+  font-size:clamp(38px,7.6vw,64px);
+  font-weight:800; letter-spacing:-0.04em; line-height:1.42;
+  color:var(--ink); max-width:780px;
+}
+.hero h1 .r{color:var(--red);}
+.hero-sub{
+  margin-top:22px; font-size:19px; color:var(--gray); line-height:1.6; font-weight:500;
+  max-width:460px;
+}
+.hero-cta{
+  margin-top:38px; display:inline-flex; align-items:center; gap:8px;
+  font-size:17.5px; font-weight:700; padding:19px 36px; border-radius:16px;
+  background:var(--red); color:#fff;
+  box-shadow:0 14px 28px -10px rgba(255,75,75,0.45);
+  transition:transform .15s ease;
+}
+.hero-cta:hover{transform:translateY(-2px);}
+.hero-scroll{
+  margin-top:56px; font-size:12.5px; color:var(--gray-light); font-weight:600;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+}
+.hero-scroll .arrow{
+  width:18px; height:18px; border-right:2px solid var(--gray-light); border-bottom:2px solid var(--gray-light);
+  transform:rotate(45deg); animation:bounce 1.8s infinite;
+}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0);} 50%{transform:rotate(45deg) translateY(6px);}}
+
+.word-cycle{
+  margin-top:30px; font-size:clamp(28px,5vw,44px); font-weight:800; letter-spacing:-0.03em;
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  cursor:pointer; user-select:none;
+  padding:14px 28px; border-radius:16px;
+  background:transparent;
+  transition:background .25s cubic-bezier(0.16,1,0.3,1), transform .25s cubic-bezier(0.16,1,0.3,1);
+}
+.word-cycle:hover{transform:translateY(-2px);}
+.wc-fixed{color:var(--ink); font-weight:800; transition:color .25s ease;}
+.wc-rotate{
+  color:var(--red); font-weight:800; display:inline-block;
+  transition:opacity .12s ease, transform .12s ease;
+}
+.wc-rotate.swap{opacity:0; transform:translateY(10px);}
+.word-cycle.paused{background:var(--ink);}
+.word-cycle.paused .wc-fixed{color:#fff;}
+.word-cycle.paused .wc-rotate{color:var(--red);}
+
+/* ===== generic stage ===== */
+.stage{padding:110px 24px; max-width:1040px; margin:0 auto;}
+.stage-inner{max-width:620px; margin:0 auto; text-align:center;}
+.stage-eyebrow{font-size:15.5px; font-weight:700; color:var(--red); margin-bottom:16px;}
+.stage h2{
+  font-size:clamp(28px,4.8vw,42px); font-weight:800; letter-spacing:-0.035em; line-height:1.38;
+  color:var(--ink);
+}
+.stage p{font-size:18px; color:var(--gray); margin-top:18px; line-height:1.7; font-weight:500;}
+
+/* ===== 2. perks ===== */
+.perk-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:56px;
+}
+.perk-card{
+  background:var(--surface); border-radius:24px; padding:40px 28px; text-align:center;
+}
+.perk-value{
+  font-size:clamp(28px,4vw,36px); font-weight:800; letter-spacing:-0.03em; color:var(--red);
+}
+.perk-value span{font-size:15px; font-weight:700; color:var(--gray-light); margin-left:4px;}
+.perk-label{margin-top:12px; font-size:15.5px; font-weight:600; color:var(--gray);}
+
+/* ===== 3. open space showcase ===== */
+.showcase{
+  background:var(--surface); border-radius:32px; padding:72px 40px; margin:0 24px;
+}
+.showcase-inner{max-width:1040px; margin:0 auto;}
+.showcase-grid{
+  display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-top:52px;
+}
+.scard{border-radius:18px; overflow:hidden; position:relative; aspect-ratio:3/4; cursor:pointer;}
+.scard img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease;}
+.scard:hover img{transform:scale(1.08);}
+.scard::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.75) 100%);}
+.scard-info{position:absolute; left:0; right:0; bottom:0; padding:16px 14px; z-index:2; color:#fff;}
+.scard-free{display:inline-block; font-size:10px; font-weight:800; background:var(--red); padding:3px 8px; border-radius:100px; margin-bottom:6px;}
+.scard-name{font-size:16.5px; font-weight:800;}
+.scard-name small{display:block; font-size:12px; font-weight:500; opacity:0.85; margin-top:3px;}
+
+/* ===== 4. process ===== */
+.process-list{
+  display:flex; flex-direction:column; margin-top:56px;
+  max-width:640px; margin-left:auto; margin-right:auto;
+}
+.p-step{
+  display:flex; gap:24px; padding:26px 0; border-bottom:1px solid var(--line); text-align:left;
+  align-items:flex-start;
+}
+.p-step:last-child{border-bottom:none;}
+.p-num{
+  width:36px; height:36px; border-radius:50%; background:var(--red-tint); color:var(--red);
+  display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px;
+  flex-shrink:0;
+}
+.p-body b{display:block; font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;}
+.p-body span{font-size:15.5px; color:var(--gray); font-weight:500; line-height:1.65;}
+
+/* ===== 5. rental spaces ===== */
+.rental-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:56px;}
+.rcard{background:var(--surface); border-radius:22px; overflow:hidden; cursor:pointer; transition:transform .25s ease;}
+.rcard:hover{transform:translateY(-6px);}
+.rcard-img{aspect-ratio:4/3; overflow:hidden; background:var(--line); position:relative;}
+.rcard-img img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease;}
+.rcard:hover .rcard-img img{transform:scale(1.06);}
+.rcard-badge{position:absolute; top:12px; left:12px; background:#fff; font-size:11px; font-weight:800; padding:5px 11px; border-radius:100px;}
+.rcard-body{padding:20px;}
+.rcard-name{font-size:19.5px; font-weight:800; letter-spacing:-0.02em;}
+.rcard-name small{display:block; font-size:13px; font-weight:600; color:var(--gray-light); margin-top:3px;}
+.rcard-price{margin-top:14px; font-size:16.5px; font-weight:800; color:var(--red);}
+.rcard-price span{font-size:12px; font-weight:600; color:var(--gray-light); margin-left:3px;}
+
+/* ===== 7. game ===== */
+.game-box{
+  margin-top:48px; background:var(--surface); border-radius:28px; padding:48px 40px;
+  text-align:left; min-height:340px;
+}
+.game-step{display:none;}
+.game-step.active{display:block; animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+.q-progress{display:flex; gap:6px; margin-bottom:28px;}
+.q-progress span{height:4px; flex:1; border-radius:100px; background:var(--line);}
+.q-progress span.done{background:var(--red);}
+.q-title{font-size:23px; font-weight:800; letter-spacing:-0.02em; margin-bottom:24px;}
+.q-options{display:flex; flex-direction:column; gap:10px;}
+.tap-hint{
+  margin-top:20px; display:inline-flex; align-items:center; gap:8px;
+  font-size:14px; font-weight:700; color:var(--red);
+  background:var(--red-tint); padding:10px 18px; border-radius:100px;
+}
+.tap-hint-icon{display:inline-block; animation:tapBounce 1.4s ease-in-out infinite;}
+@keyframes tapBounce{0%,100%{transform:translateY(0);} 50%{transform:translateY(-3px);}}
+
+.q-opt{
+  background:#fff; border-radius:14px; padding:18px 20px; cursor:pointer; transition:all .15s ease;
+  display:flex; align-items:center; justify-content:space-between;
+  border:1.5px solid transparent;
+}
+.q-opt:hover{transform:translateX(4px); box-shadow:0 6px 20px rgba(255,75,75,0.12); border-color:var(--red);}
+.q-opt:active{transform:translateX(2px) scale(0.98);}
+.q-opt-label{font-size:16.5px; font-weight:700;}
+.q-opt-sub{font-size:13.5px; color:var(--gray-light); margin-top:4px; font-weight:500;}
+.q-opt-arrow{color:var(--red); font-size:16px; font-weight:800; transition:transform .15s ease;}
+.q-opt:hover .q-opt-arrow{transform:translateX(4px);}
+.result-tag{font-size:13px; font-weight:700; color:var(--red); margin-bottom:10px;}
+.result-name{font-size:29px; font-weight:800; letter-spacing:-0.02em; margin-bottom:14px;}
+.result-desc{font-size:16px; color:var(--gray); line-height:1.68; margin-bottom:26px; font-weight:500;}
+.result-img{width:100%; aspect-ratio:16/9; border-radius:16px; overflow:hidden; margin-bottom:20px;}
+.result-img img{width:100%; height:100%; object-fit:cover;}
+.result-actions{display:flex; gap:10px;}
+.btn-sm{font-size:13.5px; font-weight:700; padding:12px 20px; border-radius:12px;}
+.btn-primary-sm{background:var(--red); color:#fff;}
+.btn-restart{background:#fff; color:var(--gray);}
+
+/* ===== footer ===== */
+/* ===== final cta ===== */
+.final-cta{
+  padding:100px 24px 50px; text-align:center; max-width:560px; margin:0 auto;
+}
+.final-cta h2{
+  font-size:clamp(28px,4.8vw,42px); font-weight:800; letter-spacing:-0.035em; line-height:1.4;
+  color:var(--ink);
+}
+.final-cta p{margin-top:16px; font-size:17px; color:var(--gray); font-weight:500;}
+.final-cta-btn{
+  margin-top:34px; display:inline-flex; align-items:center; gap:8px;
+  font-size:17.5px; font-weight:700; padding:19px 36px; border-radius:16px;
+  background:var(--red); color:#fff;
+  box-shadow:0 14px 28px -10px rgba(255,75,75,0.45);
+  transition:transform .15s ease;
+}
+.final-cta-btn:hover{transform:translateY(-2px);}
+
+.footer{padding:56px 24px 40px; text-align:center; border-top:1px solid var(--line); margin-top:20px;}
+.footer-title{font-size:15.5px; font-weight:700; color:var(--ink); margin-bottom:12px;}
+.footer-info{font-size:14.5px; color:var(--gray-light); line-height:1.9; font-weight:500;}
+.footer-info a{color:var(--gray); font-weight:600;}
+
+@media (max-width:900px){
+  .perk-grid{grid-template-columns:1fr;}
+  .rental-grid{grid-template-columns:repeat(2,1fr);}
+  .showcase-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media (max-width:640px){
+  .nav{padding:16px 20px;}
+  .hero{min-height:auto; padding:64px 20px 56px;}
+  .stage{padding:76px 20px;}
+  .showcase{margin:0 12px; padding:56px 24px; border-radius:24px;}
+  .showcase-grid{grid-template-columns:repeat(2,1fr);}
+  .game-box{padding:32px 24px;}
+  .p-step{gap:16px;}
+}
+.reveal{
+  opacity:0; transform:translateY(56px) scale(0.98); filter:blur(4px);
+  transition:opacity .9s cubic-bezier(0.16,1,0.3,1), transform .9s cubic-bezier(0.16,1,0.3,1), filter .9s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in-view{opacity:1; transform:translateY(0) scale(1); filter:blur(0);}
+.reveal-child{
+  opacity:0; transform:translateY(36px) scale(0.96);
+  transition:opacity .65s cubic-bezier(0.16,1,0.3,1), transform .65s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-child.in-view{opacity:1; transform:translateY(0) scale(1);}
+@media (prefers-reduced-motion: reduce){
+  .reveal, .reveal-child{opacity:1; transform:none; transition:none;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">서울시공익활동지원센터 <b>공간대관</b></div>
+  <a href="#game" class="nav-cta">내 공간 찾기</a>
+</nav>
+
+<!-- 1. 메인 타이틀 -->
+<header class="hero">
+  <h1>공익활동을 펼칠<br><span class="r">공간</span>이 필요하다면?</h1>
+  <div class="word-cycle" id="wordCycle">
+    <span class="wc-fixed">공익활동</span><span class="wc-rotate" id="wcRotate">이 모이다</span>
+  </div>
+  <a href="#game" class="hero-cta">내게 맞는 공간 찾기 →</a>
+  <div class="hero-scroll">더 알아보기<div class="arrow"></div></div>
+</header>
+
+<!-- 2. 센터 공간의 강점 -->
+<section class="stage reveal" id="compare">
+  <div class="stage-inner">
+    <div class="stage-eyebrow">이런 공간이에요</div>
+    <h2>서울 중앙에서,<br>부담 없이 활동을 펼치세요</h2>
+    <p>공익활동의 규모와 성격은 저마다 다르지만,<br>필요한 순간 언제든 쓸 수 있도록<br>센터가 공간을 준비했습니다.<br>삼각지역에서 도보 5분, 시간 단위로 가볍게 예약하세요.</p>
+  </div>
+
+  <div class="perk-grid">
+    <div class="perk-card reveal-child">
+      <div class="perk-value">6,250원<span>부터</span></div>
+      <div class="perk-label">시간당 대관료</div>
+    </div>
+    <div class="perk-card reveal-child">
+      <div class="perk-value">도보 5분</div>
+      <div class="perk-label">삼각지역 8번 출구에서</div>
+    </div>
+    <div class="perk-card reveal-child">
+      <div class="perk-value">당일 예약 가능</div>
+      <div class="perk-label">이용 2시간 전까지 신청·결제</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 3. 열린공간 쇼케이스 -->
+<section class="stage reveal" style="padding-top:0;">
+  <div class="showcase">
+    <div class="showcase-inner">
+      <div class="stage-inner">
+        <div class="stage-eyebrow">대관공간 밖에도</div>
+        <h2>행사가 끝나고도<br>경험할 공간이 이어집니다</h2>
+        <p>대관공간을 나서면 공익활동 콘텐츠와<br>자유롭게 쓸 수 있는 작업 공간이 가득해요.<br>예약도, 결제도 필요 없습니다.</p>
+      </div>
+      <div class="showcase-grid">
+        <div class="scard reveal-child"><img src="" data-img="pyulchida" alt="펼치다"><div class="scard-info"><span class="scard-free">무료</span><div class="scard-name">펼치다<small>공유서가</small></div></div></div>
+        <div class="scard reveal-child"><img src="" data-img="hyupryeok" alt="협력하다"><div class="scard-info"><span class="scard-free">무료</span><div class="scard-name">협력하다<small>소규모 회의</small></div></div></div>
+        <div class="scard reveal-child"><img src="" data-img="sotong" alt="소통하다"><div class="scard-info"><span class="scard-free">무료</span><div class="scard-name">소통하다<small>라운지</small></div></div></div>
+        <div class="scard reveal-child"><img src="" data-img="voice" alt="보여주다"><div class="scard-info"><span class="scard-free">무료</span><div class="scard-name">보여주다<small>전시공간</small></div></div></div>
+        <div class="scard reveal-child"><img src="" data-img="swida" alt="쉬다"><div class="scard-info"><span class="scard-free">무료</span><div class="scard-name">쉬다<small>휴게공간</small></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 대관 신청 방법 -->
+<section class="stage reveal" id="how">
+  <div class="stage-inner">
+    <div class="stage-eyebrow">신청 방법</div>
+    <h2>네 단계로,<br>쉽게 공간을 예약해요</h2>
+  </div>
+
+  <div class="process-list">
+    <div class="p-step reveal-child">
+      <div class="p-num">1</div>
+      <div class="p-body"><b>홈페이지 로그인</b><span>간편로그인으로 회원가입 없이도 바로 시작할 수 있어요.</span></div>
+    </div>
+    <div class="p-step reveal-child">
+      <div class="p-num">2</div>
+      <div class="p-body"><b>대관 가능 시간대 확인</b><span>원하는 공간의 비어있는 시간을 캘린더에서 바로 확인해요.</span></div>
+    </div>
+    <div class="p-step reveal-child">
+      <div class="p-num">3</div>
+      <div class="p-body"><b>대관 신청 및 결제</b><span>이용 2시간 전까지만 신청하고 결제하면 돼요. 카드결제와 간편결제 모두 가능해요.</span></div>
+    </div>
+    <div class="p-step reveal-child">
+      <div class="p-num">4</div>
+      <div class="p-body"><b>이용하며 공익활동 펼치기</b><span>예약 시간에 방문해서, 준비된 공간에서 시작하면 됩니다.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 대관공간 소개 -->
+<section class="stage reveal" id="spaces">
+  <div class="stage-inner">
+    <div class="stage-eyebrow">대관공간</div>
+    <h2>목적에 맞는<br>공간을 예약하세요</h2>
+    <p>회의, 교육, 촬영, 행사까지. 시간 단위로 예약하고 사용하는 공간입니다.</p>
+  </div>
+
+  <div class="rental-grid">
+    <div class="rcard reveal-child">
+      <div class="rcard-img"><span class="rcard-badge">최대 100명</span><img src="" data-img="moida" alt="모이다 다목적홀"></div>
+      <div class="rcard-body">
+        <div class="rcard-name">모이다<small>다목적홀 · 대형 스크린 2개</small></div>
+        <div class="rcard-price">25,000원<span>/ 시간</span></div>
+      </div>
+    </div>
+    <div class="rcard reveal-child">
+      <div class="rcard-img"><span class="rcard-badge">최대 30명</span><img src="" data-img="jugobatda" alt="주고받다 교육장"></div>
+      <div class="rcard-body">
+        <div class="rcard-name">주고받다<small>교육장 · 빔프로젝터</small></div>
+        <div class="rcard-price">18,750원<span>/ 시간</span></div>
+      </div>
+    </div>
+    <div class="rcard reveal-child">
+      <div class="rcard-img"><span class="rcard-badge">최대 8명</span><img src="" data-img="hwaksan" alt="확산하다 미디어실"></div>
+      <div class="rcard-body">
+        <div class="rcard-name">확산하다<small>미디어실 · 촬영장비</small></div>
+        <div class="rcard-price">6,250원<span>/ 시간</span></div>
+      </div>
+    </div>
+    <div class="rcard reveal-child">
+      <div class="rcard-img"><span class="rcard-badge">8~18명</span><img src="" data-img="meeting1" alt="회의실"></div>
+      <div class="rcard-body">
+        <div class="rcard-name">회의실<small>회의실1~6 · 전자칠판</small></div>
+        <div class="rcard-price">6,250원~12,500원<span>/ 시간</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. 공간 찾기 게임 -->
+<section class="stage reveal" id="game">
+  <div class="stage-inner">
+    <div class="stage-eyebrow">30초 매칭</div>
+    <h2>나한테 필요한<br>대관공간 찾기</h2>
+    <p>세 가지만 답하면 딱 맞는 공간을 찾아드려요.</p>
+    <div class="tap-hint"><span class="tap-hint-icon">👆</span>아래 항목을 눌러서 시작해보세요</div>
+  </div>
+
+  <div class="game-box" style="max-width:600px; margin-left:auto; margin-right:auto;">
+    <div class="q-progress" id="qProgress">
+      <span id="p1"></span><span id="p2"></span><span id="p3"></span>
+    </div>
+
+    <div class="game-step active" id="step1">
+      <div class="q-title">몇 명이 함께 오나요?</div>
+      <div class="q-options">
+        <div class="q-opt" onclick="answer(1,'solo')"><div><div class="q-opt-label">혼자예요</div><div class="q-opt-sub">개인 작업 · 독서 · 휴식</div></div><span class="q-opt-arrow">→</span></div>
+        <div class="q-opt" onclick="answer(1,'small')"><div><div class="q-opt-label">2~8명이에요</div><div class="q-opt-sub">소규모 회의 · 팀 미팅</div></div><span class="q-opt-arrow">→</span></div>
+        <div class="q-opt" onclick="answer(1,'mid')"><div><div class="q-opt-label">10~30명이에요</div><div class="q-opt-sub">교육 · 워크숍 · 스터디</div></div><span class="q-opt-arrow">→</span></div>
+        <div class="q-opt" onclick="answer(1,'large')"><div><div class="q-opt-label">40명 이상이에요</div><div class="q-opt-sub">행사 · 총회 · 대규모 모임</div></div><span class="q-opt-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="game-step" id="step2">
+      <div class="q-title">오늘의 목적은요?</div>
+      <div class="q-options" id="step2opts"></div>
+    </div>
+
+    <div class="game-step" id="step3">
+      <div class="q-title">예약하고 오셨나요?</div>
+      <div class="q-options">
+        <div class="q-opt" onclick="answerReserve(true)"><div><div class="q-opt-label">네, 예약했어요</div><div class="q-opt-sub">정해진 시간에 확실히 쓸게요</div></div><span class="q-opt-arrow">→</span></div>
+        <div class="q-opt" onclick="answerReserve(false)"><div><div class="q-opt-label">아니요, 지금 바로요</div><div class="q-opt-sub">즉흥적으로 이용하고 싶어요</div></div><span class="q-opt-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="game-step" id="stepResult">
+      <div class="result-img"><img id="resultImg" src="" alt=""></div>
+      <div class="result-tag" id="resultTag">추천 공간</div>
+      <div class="result-name" id="resultName">-</div>
+      <div class="result-desc" id="resultDesc">-</div>
+      <div class="result-actions">
+        <a href="#spaces" class="btn-sm btn-primary-sm">공간 정보 보기</a>
+        <span class="btn-sm btn-restart" onclick="restart()" style="cursor:pointer;">다시하기</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 최종 CTA -->
+<section class="final-cta reveal">
+  <h2>지금, 공익활동을 펼칠<br>공간을 예약해보세요</h2>
+  <p>회원가입부터 예약, 결제까지 홈페이지에서 한 번에 끝나요.</p>
+  <a href="https://seoulpa.kr/home/kor/M129972646/facility/rent/index.do" target="_blank" rel="noopener" class="final-cta-btn">대관 신청하러 가기 →</a>
+</section>
+
+<!-- 8. 푸터 -->
+<footer class="footer reveal">
+  <div class="footer-title">서울시공익활동지원센터 변화지원팀</div>
+  <div class="footer-info">
+    문의 070-5117-3335 · <a href="mailto:monzi@seoulpa.kr">monzi@seoulpa.kr</a><br>
+    서울특별시 용산구 백범로99길 40 용산베르디움프렌즈 101동 지하1층<br>
+    평일 09:00–21:00 · 토요일 09:00–17:00 · 일요일·공휴일 휴무
+  </div>
+</footer>
+
+<script>
+const IMG = {
+  pyulchida: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img01_01.jpg",
+  voice: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img15_01.jpg",
+  hyupryeok: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img02_01.jpg",
+  sotong: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img03_01.jpg",
+  swida: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img05_01.jpg",
+  moida: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img06_01.jpg",
+  jugobatda: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img08_01.jpg",
+  hwaksan: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img07_01.jpg",
+  meeting1: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img09_01.jpg",
+  meeting2: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img10_01.jpg",
+  meeting3: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img11_01.jpg",
+  meeting4: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img12_01.jpg",
+  meeting5: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img13_01.jpg",
+  meeting6: "https://seoulpa.kr/images/home/kor/user/sub/space_slide_img14_01.jpg",
+};
+
+document.querySelectorAll('img[data-img]').forEach(img=>{
+  const key = img.getAttribute('data-img');
+  if(IMG[key]) img.src = IMG[key];
+});
+
+const spaces = {
+  swida:   {name:'쉬다', sub:'휴게공간', tag:'열린공간 · 무료', img:'swida', desc:'혼자 잠깐 앉아 쉬어가고 싶을 때 딱이에요. 냉장고, 정수기, 전자레인지까지 갖췄습니다.'},
+  pyulchida:{name:'펼치다', sub:'공유서가', tag:'열린공간 · 무료', img:'pyulchida', desc:'책을 읽거나 조용히 작업하고 싶을 때. 2,000여 권의 도서와 편안한 좌석이 있어요.'},
+  hyupryeok:{name:'협력하다', sub:'소규모 회의공간', tag:'열린공간 · 무료', img:'hyupryeok', desc:'2~4명이 캐주얼하게 이야기 나누기 좋아요. 예약 없이 바로 이용 가능합니다.'},
+  sotong:  {name:'소통하다', sub:'회의 및 작업', tag:'열린공간 · 무료', img:'sotong', desc:'가볍게 앉아 회의하거나 노트북 작업하기 좋은 공간이에요.'},
+  meeting1:{name:'회의실', sub:'8~18인 · 6개실', tag:'대관공간 · 예약 필요', img:'meeting1', desc:'전자칠판이 모든 회의실에 있어요. 정해진 시간을 확실히 확보하고 싶다면 딱입니다.'},
+  jugobatda:{name:'주고받다', sub:'교육장 · 30인', tag:'대관공간 · 예약 필요', img:'jugobatda', desc:'강의, 워크숍 등 교육 프로그램에 적합해요. 빔프로젝터와 화이트보드까지 갖췄어요.'},
+  moida:   {name:'모이다', sub:'다목적홀 · 100인', tag:'대관공간 · 예약 필요', img:'moida', desc:'센터에서 가장 큰 공간. 대형 행사, 교육, 총회에 적합해요.'},
+  hwaksan: {name:'확산하다', sub:'미디어실 · 8인', tag:'대관공간 · 예약 필요', img:'hwaksan', desc:'공익활동 콘텐츠를 촬영, 제작하기 좋아요. 장비는 사전 협의가 필요해요.'}
+};
+
+const step2Options = {
+  solo:  [
+    {key:'sotong', label:'노트북 작업', sub:'조용히 앉아서 일하고 싶어요'},
+    {key:'pyulchida', label:'독서·휴식', sub:'책을 읽거나 잠깐 쉬고 싶어요'},
+  ],
+  small: [
+    {key:'hyupryeok', label:'가벼운 미팅', sub:'캐주얼하게 이야기하면 돼요'},
+    {key:'meeting1', label:'정식 회의', sub:'전자칠판 등 장비가 필요해요'},
+    {key:'hwaksan', label:'촬영·제작', sub:'콘텐츠를 찍거나 만들 거예요'},
+  ],
+  mid: [
+    {key:'jugobatda', label:'교육·워크숍', sub:'강의를 진행하거나 들을 거예요'},
+    {key:'meeting1', label:'팀 단위 회의', sub:'10명 안팎이 함께 논의해요'},
+  ],
+  large: [
+    {key:'moida', label:'행사·총회', sub:'가장 큰 공간이 필요해요'},
+  ]
+};
+
+let state = {size:null, purpose:null};
+
+function updateProgress(n){
+  for(let i=1;i<=3;i++) document.getElementById('p'+i).classList.toggle('done', i<=n);
+}
+function showStep(id){
+  document.querySelectorAll('.game-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function answer(step, value){
+  if(step===1){
+    state.size = value;
+    updateProgress(1);
+    const opts = step2Options[value];
+    const wrap = document.getElementById('step2opts');
+    wrap.innerHTML = '';
+    opts.forEach(o=>{
+      const div = document.createElement('div');
+      div.className = 'q-opt';
+      div.onclick = ()=>answer(2, o.key);
+      div.innerHTML = `<div><div class="q-opt-label">${o.label}</div><div class="q-opt-sub">${o.sub}</div></div><span class="q-opt-arrow">→</span>`;
+      wrap.appendChild(div);
+    });
+    if(opts.length===1){
+      state.purpose = opts[0].key;
+      updateProgress(2);
+      finishGame();
+      return;
+    }
+    showStep('step2');
+  } else if(step===2){
+    state.purpose = value;
+    updateProgress(2);
+    showStep('step3');
+  }
+}
+function answerReserve(reserved){
+  updateProgress(3);
+  finishGame(reserved);
+}
+function finishGame(reserved){
+  const sp = spaces[state.purpose];
+  document.getElementById('resultImg').src = IMG[sp.img] || '';
+  document.getElementById('resultTag').textContent = sp.tag;
+  document.getElementById('resultName').textContent = sp.name + ' · ' + sp.sub;
+  let desc = sp.desc;
+  if(sp.tag.indexOf('대관') > -1 && reserved===false){
+    desc += ' 이 공간은 예약이 필요해요 — 2시간 전까지 신청하면 당일에도 이용할 수 있어요.';
+  }
+  document.getElementById('resultDesc').textContent = desc;
+  showStep('stepResult');
+}
+function restart(){
+  state = {size:null, purpose:null};
+  updateProgress(0);
+  showStep('step1');
+}
+
+const wcWords = ['이 모이다','을 주고받다','을 확산하다','을 펼치다','가와 협력하다','가와 소통하다','이 움직이다','이 변화하다','이 자라다','을 만들다'];
+const wcEl = document.getElementById('wcRotate');
+const wcWrap = document.getElementById('wordCycle');
+let wcIndex = 0;
+let wcTimer = null;
+let wcPaused = false;
+
+function wcTick(){
+  if(wcPaused) return;
+  wcEl.classList.add('swap');
+  setTimeout(()=>{
+    wcIndex = (wcIndex + 1) % wcWords.length;
+    wcEl.textContent = wcWords[wcIndex];
+    wcEl.classList.remove('swap');
+  }, 120);
+}
+wcTimer = setInterval(wcTick, 450);
+
+wcWrap.addEventListener('mouseenter', ()=>{
+  wcPaused = true;
+  wcWrap.classList.add('paused');
+});
+wcWrap.addEventListener('mouseleave', ()=>{
+  wcPaused = false;
+  wcWrap.classList.remove('paused');
+});
+
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      const children = entry.target.querySelectorAll('.reveal-child');
+      children.forEach((child, i)=>{
+        setTimeout(()=>child.classList.add('in-view'), i * 110);
+      });
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.08, rootMargin:'0px 0px -100px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+</script>
+</body>
+</html>
