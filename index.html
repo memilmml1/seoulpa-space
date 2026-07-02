@@ -499,13 +499,13 @@ document.querySelectorAll('img[data-img]').forEach(img=>{
 });
 
 const spaces = {
-  swida:   {name:'쉬다', sub:'휴게공간', tag:'열린공간 · 무료', img:'swida', desc:'혼자 잠깐 앉아 쉬어가고 싶을 때 딱이에요. 냉장고, 정수기, 전자레인지까지 갖췄습니다.'},
-  pyulchida:{name:'펼치다', sub:'공유서가', tag:'열린공간 · 무료', img:'pyulchida', desc:'책을 읽거나 조용히 작업하고 싶을 때. 2,000여 권의 도서와 편안한 좌석이 있어요.'},
-  hyupryeok:{name:'협력하다', sub:'소규모 회의공간', tag:'열린공간 · 무료', img:'hyupryeok', desc:'2~4명이 캐주얼하게 이야기 나누기 좋아요. 예약 없이 바로 이용 가능합니다.'},
-  sotong:  {name:'소통하다', sub:'회의 및 작업', tag:'열린공간 · 무료', img:'sotong', desc:'가볍게 앉아 회의하거나 노트북 작업하기 좋은 공간이에요.'},
-  meeting1:{name:'회의실', sub:'8~18인 · 6개실', tag:'대관공간 · 예약 필요', img:'meeting1', desc:'전자칠판이 모든 회의실에 있어요. 정해진 시간을 확실히 확보하고 싶다면 딱입니다.'},
+  swida:   {name:'쉬다', sub:'휴게공간', tag:'열린공간 · 무료', img:'swida', desc:'혼자 잠깐 앉아 쉬어가고 싶을 때 딱이에요. 편안한 테이블과 의자를 갖췄습니다.'},
+  pyulchida:{name:'펼치다', sub:'공유서가', tag:'열린공간 · 무료', img:'pyulchida', desc:'책을 읽거나 조용히 작업하고 싶을 때. 공익활동 분야 포함 2,000여 권의 도서와 편안한 좌석이 있어요.'},
+  hyupryeok:{name:'협력하다', sub:'소규모 회의공간', tag:'열린공간 · 무료', img:'hyupryeok', desc:'4~6명이 캐주얼하게 이야기 나누기 좋아요. 예약 없이 바로 이용 가능합니다.'},
+  sotong:  {name:'소통하다', sub:'1인 작업 테이블', tag:'열린공간 · 무료', img:'sotong', desc:'가볍게 앉아 노트북 작업하기 좋은 공간이에요.'},
+  meeting1:{name:'회의실', sub:'8~18인 · 6개실', tag:'대관공간 · 예약 필요', img:'meeting1', desc:'전자칠판과 회의 테이블이 있어요. 일정이 정해진 회의 진행에 딱입니다.'},
   jugobatda:{name:'주고받다', sub:'교육장 · 30인', tag:'대관공간 · 예약 필요', img:'jugobatda', desc:'강의, 워크숍 등 교육 프로그램에 적합해요. 빔프로젝터와 화이트보드까지 갖췄어요.'},
-  moida:   {name:'모이다', sub:'다목적홀 · 100인', tag:'대관공간 · 예약 필요', img:'moida', desc:'센터에서 가장 큰 공간. 대형 행사, 교육, 총회에 적합해요.'},
+  moida:   {name:'모이다', sub:'다목적홀 · 100인', tag:'대관공간 · 예약 필요', img:'moida', desc:'센터에서 가장 큰 공간. 최대 100명 규모로 행사, 교육, 총회에 적합해요.'},
   hwaksan: {name:'확산하다', sub:'미디어실 · 8인', tag:'대관공간 · 예약 필요', img:'hwaksan', desc:'공익활동 콘텐츠를 촬영, 제작하기 좋아요. 장비는 사전 협의가 필요해요.'}
 };
 
@@ -517,7 +517,7 @@ const step2Options = {
   small: [
     {key:'hyupryeok', label:'가벼운 미팅', sub:'캐주얼하게 이야기하면 돼요'},
     {key:'meeting1', label:'정식 회의', sub:'전자칠판 등 장비가 필요해요'},
-    {key:'hwaksan', label:'촬영·제작', sub:'콘텐츠를 찍거나 만들 거예요'},
+    {key:'hwaksan', label:'촬영·제작', sub:'공익활동 콘텐츠를 찍거나 만들 거예요'},
   ],
   mid: [
     {key:'jugobatda', label:'교육·워크숍', sub:'강의를 진행하거나 들을 거예요'},
@@ -575,7 +575,7 @@ function finishGame(reserved){
   document.getElementById('resultName').textContent = sp.name + ' · ' + sp.sub;
   let desc = sp.desc;
   if(sp.tag.indexOf('대관') > -1 && reserved===false){
-    desc += ' 이 공간은 예약이 필요해요 — 2시간 전까지 신청하면 당일에도 이용할 수 있어요.';
+    desc += ' 이 공간은 예약이 필요해요. 이용 2시간 전까지 신청하면 당일에도 이용할 수 있어요.';
   }
   document.getElementById('resultDesc').textContent = desc;
   showStep('stepResult');
